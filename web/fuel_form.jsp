@@ -115,7 +115,8 @@
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label class="col-form-label">Documents<span class="text-danger">*</span></label>
-                                                                                <input class="form-control form-control-sm" type="file"  accept="application/pdf" id="doc" multiple>
+                                                                                <!--<input class="form-control form-control-sm" type="file"  accept="application/pdf" id="doc" multiple>-->
+                                                                                <input class="form-control form-control-sm" type="file" accept="application/pdf,image/*" id="doc" multiple>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -193,9 +194,9 @@
             var fileInput = document.getElementById('doc');
             var litresValue = document.getElementById('litres').value;
             if (!fileInput.files.length > 0) {
-                Swal.fire("Files not uploaded!", "", "error");
+                Swal.fire("Files not uploaded!", "", "warning");
             } else if (parseFloat(litresValue) === 0) {
-                Swal.fire("Error!", "Litres should be greater than 0", "error");
+                Swal.fire("Error!", "Litres should be greater than 0", "warning");
             } else {
                 const formData = new FormData();
                 const docFiles = $('#doc').prop('files');
@@ -207,6 +208,7 @@
                 formData.append('epf', document.getElementById('epf').value);
                 formData.append('year_month', document.getElementById("monthYear").value);
                 formData.append('litres', document.getElementById('litres').value);
+                formData.append('ext', document.getElementById('doc').value);
 
                 var xmlHttp = new XMLHttpRequest();
                 xmlHttp.open('POST', 'fuel_upload', true);
@@ -221,15 +223,15 @@
                         } else if (data.status === 'err') {
                             Swal.fire("Error!", data.msg, "error");
                         } else if (data.status === 'input') {
-                            Swal.fire("Error!", data.msg, "error");
+                            Swal.fire("Error!", data.msg, "warning");
                         } else if (data.status === 'exists') {
-                            Swal.fire("Error!", data.msg, "error");
+                            Swal.fire("Error!", data.msg, "warning");
                         } else if (data.status === 'exceed') {
-                            Swal.fire("Error!", data.msg, "error");
+                            Swal.fire("Error!", data.msg, "warning");
                         } else if (data.status === 'no_allocation') {
-                            Swal.fire("Error!", data.msg, "error");
+                            Swal.fire("Error!", data.msg, "warning");
                         } else if (data.status === 'invalid_litres') {
-                            Swal.fire("Error!", data.msg, "error");
+                            Swal.fire("Error!", data.msg, "warning");
                         }
                     }
                 };

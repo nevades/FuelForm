@@ -95,8 +95,14 @@ public class fuel_upload extends HttpServlet {
                     for (Map.Entry<String, FileItem> entry : files.entrySet()) {
                         String key = entry.getKey();
                         FileItem get = entry.getValue();
+                        FileItem fileItem = entry.getValue();
 
-                        String fname = "FuelForm_" + epf + "_" + year_month + "_" + new SimpleDateFormat("yyyy-MM-dd HH-mm-ss-SSS").format(new Date()) + ".pdf";
+                        // Get the original file name
+                        String originalFileName = fileItem.getName();
+                        String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+                        System.out.println(fileExtension);
+
+                        String fname = "FuelForm_" + epf + "_" + year_month + "_" + new SimpleDateFormat("yyyy-MM-dd HH-mm-ss-SSS").format(new Date()) + fileExtension;
                         neva += (neva.isEmpty() ? "" : ",") + fname;
                         File f2 = new File(ff, fname);
                         get.write(f2);
